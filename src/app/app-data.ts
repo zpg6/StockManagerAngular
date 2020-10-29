@@ -12,4 +12,5 @@ export class AppData {
   queryReadyName = false
 
   recentSearches = []
+
 }

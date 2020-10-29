@@ -7,8 +7,26 @@
     <img src="../../assets/images/StockManagerLogoV1.png" width="100px" height="100px">
   </div>
 
+  <hr>
+
+  <p class="menu-label">
+    Welcome, {{this.appData.user.firstName}}!
+  </p>
+  <p class="menu-label">
+    {{this.appData.user.companyID}}
+  </p>
+  <p class="menu-label">
+    {{this.appData.user.storeID}}
+  </p>
+
+  <hr>
+
+  <p class="menu-label">
+    Search
+  </p>
+
   <ul class="menu-list">
-    <li><a routerLink="search/id" routerLinkActive="is-active">Search</a></li>
+    <li><a routerLink="search" routerLinkActive="is-active">Search</a></li>
   </ul>
   <br>
 
@@ -17,12 +35,11 @@
   </p>
 
   <ul class="menu-list" *ngIf="isAdmin()">
-    <li><a routerLink="tasks" routerLinkActive="is-active">Tasks</a></li>
     <li><a routerLink="invite" routerLinkActive="is-active">Invite Codes</a></li>
+    <li><a routerLink="tasks" routerLinkActive="is-active">Tasks</a></li>
   </ul>
 
-
-  <br><br>
+  <hr>
 
   <button class="button is-danger {{this.loading ? 'is-loading':''}}" [disabled]="this.disabled" (click)="this.logout()">Log Out</button>
 

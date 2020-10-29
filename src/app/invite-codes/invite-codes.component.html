@@ -13,7 +13,16 @@
         Please note that generated invitation codes are valid for 30 days.
       </p>
       <br>
-      <button class="button is-primary">Generate New Code</button>
+      <span>
+        <button style="margin-bottom: 1.0rem;" class="button is-primary" (click)="this.generateCode()">Generate New Code</button>
+
+        <p class="notification is-light is-success" *ngIf="this.successMsg?.length > 0">
+          {{ successMsg }}
+        </p>
+        <p class="notification is-light is-danger" *ngIf="this.errorMsg?.length > 0">
+          {{ errorMsg }}
+        </p>
+      </span>
       <br><br>
       <table class="table">
 
@@ -27,15 +36,15 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="this.codes.length > 0">
 
-          <tr>
-              <td>10001</td>
-              <td>10-28-20 10:45AM</td>
-              <td>11-27-20 10:45AM</td>
-              <td>0</td>
+          <tr *ngFor="let invCode of this.codes">
+              <td>{{invCode.code}}</td>
+              <td>{{invCode.timeCreated * 1000 | date}}</td>
+              <td>{{invCode.timeExpires * 1000 | date}}</td>
+              <td>{{invCode.uses}}</td>
               <td>
-                <button class="button is-danger">Revoke</button>
+                <button class="button is-danger" (click)="this.revokeCode(invCode.code)">Revoke</button>
               </td>
           </tr>
         </tbody>

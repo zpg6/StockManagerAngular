@@ -86,8 +86,16 @@
 
       </table>
 
-      <button class="button is-primary" (click)="this.sendNewTask()">Assign Task</button>
-      <br>
+      <span>
+        <button style="margin-bottom: 1.0rem;" class="button is-primary" (click)="this.sendNewTask()">Assign Task</button>
+
+        <p class="notification is-light is-success" *ngIf="this.successMsg.length > 0">
+          {{ successMsg }}
+        </p>
+        <p class="notification is-light is-danger" *ngIf="this.errorMsg.length > 0">
+          {{ errorMsg }}
+        </p>
+      </span>
 
 
 

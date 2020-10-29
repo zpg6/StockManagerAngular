@@ -10,6 +10,7 @@ import { SearchNameComponent } from './search-name/search-name.component';
 import { ResultsIDComponent } from './results-id/results-id.component';
 import { RecentSearchesComponent } from './recent-searches/recent-searches.component';
 import { InviteCodesComponent } from './invite-codes/invite-codes.component';
+import { QuantitiesComponent } from './quantities/quantities.component';
 
 const routes: Routes = [
   {
@@ -17,23 +18,8 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'dashboard',
-    component: DashComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'invite',
-    component: InviteCodesComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'search/id',
+    path: 'search',
     component: SearchIDComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'search/name',
-    component: SearchNameComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -47,15 +33,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'search/recent',
-    component: RecentSearchesComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'tasks',
     component: TasksComponent,
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'invite',
+    component: InviteCodesComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

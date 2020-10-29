@@ -13,6 +13,7 @@
   color: whitesmoke;
   border-radius: 0.25rem;
   margin-top: 1.0rem;
+  border: solid 0.05rem #3298dc
 }
 
 .menu-list a:hover {

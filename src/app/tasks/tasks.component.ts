@@ -23,6 +23,9 @@ export class TasksComponent {
 
   seeded = false;
 
+  errorMsg = ''
+  successMsg = ''
+
   @ViewChild('newTaskItemID') newTaskItemID: ElementRef;
 
   @ViewChild('newTaskEmployee') newTaskEmployee: ElementRef;
@@ -40,11 +43,16 @@ export class TasksComponent {
 
   constructor(private ar: ActivatedRoute, private messageService: MessageService, private http: HttpClient) {
 
+    this.getTasks()
+
+  }
+
+  getTasks() {
     let url = this.messageService.getMessageOnce().apiRootURL + '/users/get-all'
     var body = {
       storeID: this.messageService.getMessageOnce().user.storeID
     }
-    http.post<any[]>(url, body).toPromise().then(result => {
+    this.http.post<any[]>(url, body).toPromise().then(result => {
       this.employees = result.filter(emp => {
         return emp?.id
       })
@@ -54,29 +62,23 @@ export class TasksComponent {
         body['userID'] = emp.id
         console.log(body)
         let outstandingTaskURL = this.messageService.getMessageOnce().apiRootURL + '/user/tasks/get/outstanding'
-        http.post<any[]>(outstandingTaskURL, body).toPromise().then(tasks => {
+        this.http.post<any[]>(outstandingTaskURL, body).toPromise().then(tasks => {
           if (tasks.length > 0) {
-            this.outstanding = this.outstanding.concat(tasks.filter(task => {
-              return task.id && task.id !== ''
-            }))
+            this.outstanding = tasks
           }
         })
 
         let completedTaskURL = this.messageService.getMessageOnce().apiRootURL + '/user/tasks/get/completed'
-        http.post<any[]>(completedTaskURL, body).toPromise().then(tasks => {
+        this.http.post<any[]>(completedTaskURL, body).toPromise().then(tasks => {
           if (tasks.length > 0) {
-            this.completed = this.completed.concat(tasks.filter(task => {
-              return task.id && task.id !== ''
-            }))
+            this.completed = tasks
           }
         })
 
         let approvedTaskURL = this.messageService.getMessageOnce().apiRootURL + '/user/tasks/get/approved'
-        http.post<any[]>(approvedTaskURL, body).toPromise().then(tasks => {
+        this.http.post<any[]>(approvedTaskURL, body).toPromise().then(tasks => {
           if (tasks.length > 0) {
-            this.approved = this.approved.concat(tasks.filter(task => {
-              return task.id && task.id !== ''
-            }))
+            this.approved = tasks
           }
         })
 
@@ -84,7 +86,6 @@ export class TasksComponent {
       })
 
     })
-
   }
 
   ngAfterViewInit(): void {
@@ -120,6 +121,37 @@ export class TasksComponent {
       }
     })
 
+    if (id?.length == 0 ||
+        srcAisle?.length == 0 ||
+        srcAisleSection?.length == 0 ||
+        srcSpot?.length == 0 ||
+        srcType?.length == 0 ||
+        destAisle?.length == 0 ||
+        destAisleSection?.length == 0 ||
+        destSpot?.length == 0 ||
+        destType?.length == 0||
+        assignedEmployeeID.length == 0)
+    {
+      this.successMsg = ''
+      this.errorMsg = '❌ All Fields are required.'
+      return
+    }
+
+    this.errorMsg = ''
+
+
+    this.newTaskItemID.nativeElement.value = ''
+    this.newTaskItemSrcAisle.nativeElement.value = ''
+    this.newTaskItemSrcAisleSection.nativeElement.value = ''
+    this.newTaskItemSrcSpot.nativeElement.value = ''
+    this.newTaskItemSrcType.nativeElement.value = ''
+    this.newTaskItemDestAisle.nativeElement.value = ''
+    this.newTaskItemDestAisleSection.nativeElement.value = ''
+    this.newTaskItemDestSpot.nativeElement.value = ''
+    this.newTaskItemDestType.nativeElement.value = ''
+
+
+
     var body = {
       storeID: this.messageService.getMessageOnce().user.storeID,
       assignedEmployeeID: assignedEmployeeID,
@@ -145,6 +177,7 @@ export class TasksComponent {
     this.http.post<any[]>(url, body).toPromise().then(result => {
       console.log(result)
       this.outstanding.push(result)
+      this.successMsg = '✅ Task Assigned!'
     })
 
   }
@@ -160,9 +193,7 @@ export class TasksComponent {
     this.http.post<any[]>(url, body).toPromise().then(result => {
       console.log(result)
       this.completed.push(result)
-      this.outstanding = this.outstanding.filter(task => {
-        task.id !== id
-      })
+      this.getTasks()
     })
 
   }
@@ -177,9 +208,7 @@ export class TasksComponent {
     this.http.post<any[]>(url, body).toPromise().then(result => {
       console.log(result)
       this.approved.push(result)
-      this.completed = this.completed.filter(task => {
-        task.id !== id
-      })
+      this.getTasks()
     })
 
   }

@@ -20,6 +20,16 @@ import { NumberPadComponent } from './number-pad/number-pad.component';
 import { SearchPageDescComponent } from './search-page-desc/search-page-desc.component';
 import { CookieService } from 'ngx-cookie-service';
 
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+import { QuantitiesComponent } from './quantities/quantities.component';
+
+// Note we need a separate function as it's required
+// by the AOT compiler.
+export function playerFactory() {
+  return player;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,13 +48,15 @@ import { CookieService } from 'ngx-cookie-service';
     RecentSearchesComponent,
     InviteCodesComponent,
     NumberPadComponent,
-    SearchPageDescComponent
+    SearchPageDescComponent,
+    QuantitiesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
+    LottieModule.forRoot({ player: playerFactory })
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

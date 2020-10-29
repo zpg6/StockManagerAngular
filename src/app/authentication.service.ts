@@ -52,6 +52,7 @@ export class AuthenticationService {
   }
 
   logout() {
+    this.cookies.deleteAll()
     this.authenticated = false
   }
 

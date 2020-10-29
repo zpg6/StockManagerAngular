@@ -8,6 +8,9 @@ import { AuthenticationService } from '../authentication.service';
 import { User } from '../user';
 import { CookieService } from 'ngx-cookie-service';
 
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -61,12 +64,20 @@ export class HomeComponent implements OnInit {
 
   constructor(private messageService: MessageService, private http: HttpClient, private router: Router, private authService: AuthenticationService, private cookies: CookieService) {
       // subscribe to home component messages
-      this.subscription = new Subscription()
-      this.subscription.add(this.messageService.getMessage().subscribe(message => {
-        this.appData = message;
-        console.log('Subscription updated @ ModalComponent')
-      }));
-      console.log('Subscription created @ ModalComponent')
+      this.authService.authenticateFromCookies()
+        .then(result => {
+          if (result) {
+            this.router.navigate(['search'])
+          } else {
+            this.subscription = new Subscription()
+            this.subscription.add(this.messageService.getMessage().subscribe(message => {
+              this.appData = message;
+              console.log('Subscription updated @ ModalComponent')
+            }));
+            console.log('Subscription created @ ModalComponent')
+          }
+        })
+
 
   }
 
@@ -330,7 +341,7 @@ export class HomeComponent implements OnInit {
         this.cookies.set('email', response.email)
         this.cookies.set('password', password)
         this.updateObserver();
-        this.router.navigate(['dashboard'])
+        this.router.navigate(['search'])
       } else {
         console.log('response could not be processed');
       }
@@ -363,7 +374,7 @@ export class HomeComponent implements OnInit {
         this.cookies.set('password', password)
         this.authService.login();
         this.updateObserver();
-        this.router.navigate(['dashboard'])
+        this.router.navigate(['search'])
       } else {
         console.log('response could not be processed');
       }
@@ -375,6 +386,15 @@ export class HomeComponent implements OnInit {
       this.disabled = false;
       this.loading = false;
     })
+  }
+
+  options: AnimationOptions = {
+    path: 'assets/images/forklift-lottie.json',
+
+  };
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
   }
 
 }

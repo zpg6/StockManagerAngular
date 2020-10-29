@@ -21,7 +21,9 @@
     "@angular/router": "~10.0.6",
     "@mdi/font": "^5.8.55",
     "bulma": "^0.9.1",
+    "lottie-web": "^5.7.3",
     "ngx-cookie-service": "^10.1.1",
+    "ngx-lottie": "^6.4.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

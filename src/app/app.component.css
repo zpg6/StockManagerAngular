@@ -1,5 +1,9 @@
 
 .column {
   padding-bottom: 0.0rem;
-  min-height: 100vh;
+  min-height: 102vh;
+}
+
+.columns {
+
 }

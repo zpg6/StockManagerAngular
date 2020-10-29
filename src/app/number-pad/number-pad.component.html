@@ -1,0 +1,12 @@
+
+<section>
+  <div class="grid-container" *ngFor="let array of numbers">
+    <div *ngFor="let num of array">
+      <div>
+        <div (click)="handleClick(num)" (mouseover)="this.hover = num;" (mouseout)="this.hover = '';" (mousedown)="this.down = num;" (mouseup)="this.down = '';">
+          <img class="number-pad-button" src="../../assets/images/SM_{{ num }}{{ this.hover === num ? '_w':'' }}{{ this.down === num ? 'x2':'' }}.png">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+
+<div class="card has-text-centered" style="padding-bottom: 1.0rem;">
+  <img src="{{this.itemObject?.imageURL}}" *ngIf="this.itemObject.imageURL" style="margin-top: 1.0rem;">
+
+  <p class="title" style="margin-top: 1.0rem;">
+    {{ this.itemObject?.name }}
+  </p>
+
+  <p class="subtitle">
+    ID: {{ this.itemObject?.userDesignatedID }}
+  </p>
+
+  <p class="body">
+    Back-Stock Quantity: {{ this.itemObject?.backstockQuantity}}
+  </p>
+
+  <p class="body">
+    Accessible Quantity: {{ this.itemObject?.customerAccessibleQuantity }}
+  </p>
+
+  <p class="body">
+    Total In-Stock Quantity: {{ this.itemObject?.backstockQuantity + this.itemObject?.customerAccessibleQuantity }}
+  </p>
+
+  <div *ngIf="this.itemObject?.locations?.length > 0">
+    <hr>
+
+    <p class="subtitle">
+      Locations
+    </p>
+
+    <div *ngFor="let loc of this.itemObject?.locations">
+
+      <div class="columns is-vcentered is-centered">
+
+        <div class="column is-one-third">
+          <p class="has-text-left" style="margin-left: 1.0rem;">
+            <b>Aisle:</b> {{ loc.aisle }}
+            <br>
+            <b>Section:</b> {{ loc.aisleSection }}
+            <br>
+            <b>Spot:</b> {{ loc.spot }}
+            <br>
+            <b>Type:</b> {{ loc.type }}
+          </p>
+        </div>
+
+        <div class="column is-one-fifth">
+
+        </div>
+
+        <div class="column is-one-third">
+          <p class="has-text-right" style="margin-right: 1.0rem;">
+            <button class="button is-primary" style="margin-bottom: 0.75rem;" [routerLink]="'../../../tasks'" [queryParams]="this.getParams(loc)">Assign Task</button>
+            <button class="button is-danger">Delete</button>
+          </p>
+        </div>
+
+      </div>
+
+      <br>
+
+    </div>
+
+  </div>
+
+
+
+
+</div>
+
+

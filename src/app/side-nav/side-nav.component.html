@@ -1,0 +1,29 @@
+
+
+
+<aside class="menu">
+
+  <div class="has-text-centered">
+    <img src="../../assets/images/StockManagerLogoV1.png" width="100px" height="100px">
+  </div>
+
+  <ul class="menu-list">
+    <li><a routerLink="search/id" routerLinkActive="is-active">Search</a></li>
+  </ul>
+  <br>
+
+  <p class="menu-label" *ngIf="isAdmin()">
+    Administrators
+  </p>
+
+  <ul class="menu-list" *ngIf="isAdmin()">
+    <li><a routerLink="tasks" routerLinkActive="is-active">Tasks</a></li>
+    <li><a routerLink="invite" routerLinkActive="is-active">Invite Codes</a></li>
+  </ul>
+
+
+  <br><br>
+
+  <button class="button is-danger {{this.loading ? 'is-loading':''}}" [disabled]="this.disabled" (click)="this.logout()">Log Out</button>
+
+</aside>

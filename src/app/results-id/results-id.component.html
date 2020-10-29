@@ -1,0 +1,24 @@
+
+
+
+    <!-- An error while creating account that is unrelated to form validation will appear -->
+    <div *ngIf="showNotification()" style="margin-top: 15px;">
+      <div class="notification is-danger is-light">
+        <button class="delete" (click)="hideNotification()"></button>
+        <p>
+          {{ this.error }}
+        </p>
+      </div>
+    </div>
+    <div class="columns is-centered" *ngIf="this.result">
+      <div class="column is-half">
+          <app-item-cell [itemObject]="this.result"></app-item-cell>
+      </div>
+    </div>
+    <div *ngIf="!this.result">
+      <div class="columns is-centered" *ngIf="this.result">
+        <div class="column is-half has-text-centered">
+          <p class="subtitle">Loading...</p>
+        </div>
+      </div>
+    </div>

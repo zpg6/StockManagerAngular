@@ -1,0 +1,249 @@
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      New Task
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="content">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th><abbr title="Item Assigned">Item</abbr></th>
+            <th><abbr title="Employee ID">Employee</abbr></th>
+            <th><abbr title="Source Location">Current Location</abbr></th>
+            <th><abbr title="Destination">Destination</abbr></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+              <td>
+                <input class="input is-primary" type="number" min="0" placeholder="Item ID" name="newTaskItemID" #newTaskItemID>
+              </td>
+              <td>
+                <div class="select is-primary">
+                  <select name="newTaskEmployee" #newTaskEmployee>
+                    <option *ngFor="let emp of this.employees">{{emp.name}}</option>
+
+                  </select>
+                </div>
+              </td>
+              <td>
+                <input [disabled]="this.seeded" class="input is-primary" type="text" maxlength="2" placeholder="Aisle" name="newTaskItemSrcAisle" #newTaskItemSrcAisle>
+                -
+                <input [disabled]="this.seeded" class="input is-primary" type="text" maxlength="1" placeholder="Aisle Section" name="newTaskItemSrcAisleSection" #newTaskItemSrcAisleSection>
+                -
+                <input [disabled]="this.seeded" class="input is-primary" type="text" maxlength="2" placeholder="Spot" name="newTaskItemSrcSpot" #newTaskItemSrcSpot>
+                -<br>
+                <div class="select is-primary">
+                  <select [disabled]="this.seeded" name="newTaskItemSrcType" #newTaskItemSrcType>
+                    <option value="" selected disabled hidden>Choose Type</option>
+                    <option>Shelf Space</option>
+                    <option>Pod</option>
+                    <option>Side Stack</option>
+                    <option>J-Hook</option>
+                    <option>Floor Model</option>
+                    <option>Top-Stock</option>
+                    <option>Bottom-Stock</option>
+                    <option>Backroom-Stock</option>
+                    <option>Incoming</option>
+                    <option>Outgoing</option>
+                    <option>Unprocessed</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <input class="input is-primary" type="text" maxlength="2" placeholder="Aisle" name="newTaskItemDestAisle" #newTaskItemDestAisle>
+                -
+                <input class="input is-primary" type="text" maxlength="1" placeholder="Section" name="newTaskItemDestAisleSection" #newTaskItemDestAisleSection>
+                -
+                <input class="input is-primary" type="text" maxlength="2" placeholder="Spot" name="newTaskItemDestSpot" #newTaskItemDestSpot>
+                -<br>
+                <div class="select is-primary">
+                  <select name="" #newTaskItemDestType>
+                    <option value="" selected disabled hidden>Choose Type</option>
+                    <option>Shelf Space</option>
+                    <option>Pod</option>
+                    <option>Side Stack</option>
+                    <option>J-Hook</option>
+                    <option>Floor Model</option>
+                    <option>Top-Stock</option>
+                    <option>Bottom-Stock</option>
+                    <option>Backroom-Stock</option>
+                    <option>Incoming</option>
+                    <option>Outgoing</option>
+                    <option>Unprocessed</option>
+                  </select>
+                </div>
+              </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <button class="button is-primary" (click)="this.sendNewTask()">Assign Task</button>
+      <br>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ////////////////////////////////////////////////// -->
+
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      Outstanding Tasks
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="content">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th><abbr title="Task Identifier">ID</abbr></th>
+            <th><abbr title="Time Assigned">Assigned</abbr></th>
+            <th><abbr title="Time Completed">Completed</abbr></th>
+            <th><abbr title="Time Approved">Approved</abbr></th>
+            <th><abbr title="Item Assigned">Item ID</abbr></th>
+            <th><abbr title="Employee ID">Employee</abbr></th>
+            <th><abbr title="Current Location">Location</abbr></th>
+            <th><abbr title="Destination">Destination</abbr></th>
+            <th><abbr title="Complete">Complete?</abbr></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let task of this.outstanding">
+              <td>{{task.id}}</td>
+              <td>{{task.timeAssigned * 1000 | date}}</td>
+              <td>-</td>
+              <td>-</td>
+              <td>{{task.userDesignatedID}}</td>
+              <td>{{task.assignedEmployeeID}}</td>
+              <td>{{task.src?.aisle}}-{{task.src?.aisleSection}}-{{task.src?.spot}}-{{task.src?.type}}</td>
+              <td>{{task.dest?.aisle}}-{{task.dest?.aisleSection}}-{{task.dest?.spot}}-{{task.dest?.type}}</td>
+              <td>
+                <button class="button is-primary" (click)="this.completeTask(task.id)">Completed</button>
+              </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!-- ///////////////////////////////////////// -->
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      Completed Tasks
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="content">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th><abbr title="Task Identifier">ID</abbr></th>
+            <th><abbr title="Time Assigned">Assigned</abbr></th>
+            <th><abbr title="Time Completed">Completed</abbr></th>
+            <th><abbr title="Time Approved">Approved</abbr></th>
+            <th><abbr title="Item Assigned">Item ID</abbr></th>
+            <th><abbr title="Employee ID">Employee</abbr></th>
+            <th><abbr title="Current Location">Location</abbr></th>
+            <th><abbr title="Destination">Destination</abbr></th>
+            <th><abbr title="Approved">Approve?</abbr></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let task of this.completed">
+              <td>{{task.id}}</td>
+              <td>{{task.timeAssigned * 1000 | date}}</td>
+              <td>{{task.timeCompleted * 1000 | date}}</td>
+              <td>-</td>
+              <td>{{task.userDesignatedID}}</td>
+              <td>{{task.assignedEmployeeID}}</td>
+              <td>{{task.src?.aisle}}-{{task.src?.aisleSection}}-{{task.src?.spot}}-{{task.src?.type}}</td>
+              <td>{{task.dest?.aisle}}-{{task.dest?.aisleSection}}-{{task.dest?.spot}}-{{task.dest?.type}}</td>
+              <td>
+                <button class="button is-info" (click)="this.approveTask(task.id)">Approve</button>
+              </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ///////////////////////////////////////// -->
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      Approved Tasks
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="content">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th><abbr title="Task Identifier">ID</abbr></th>
+            <th><abbr title="Time Assigned">Assigned</abbr></th>
+            <th><abbr title="Time Completed">Completed</abbr></th>
+            <th><abbr title="Time Approved">Approved</abbr></th>
+            <th><abbr title="Item Assigned">Item ID</abbr></th>
+            <th><abbr title="Employee ID">Employee</abbr></th>
+            <th><abbr title="Current Location">Location</abbr></th>
+            <th><abbr title="Destination">Destination</abbr></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let task of this.approved">
+              <td>{{task.id}}</td>
+              <td>{{task.timeAssigned * 1000 | date}}</td>
+              <td>{{task.timeCompleted * 1000 | date}}</td>
+              <td>{{task.timeApproved * 1000 | date}}</td>
+              <td>{{task.userDesignatedID}}</td>
+              <td>{{task.assignedEmployeeID}}</td>
+              <td>{{task.src?.aisle}}-{{task.src?.aisleSection}}-{{task.src?.spot}}-{{task.src?.type}}</td>
+              <td>{{task.dest?.aisle}}-{{task.dest?.aisleSection}}-{{task.dest?.spot}}-{{task.dest?.type}}</td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+
+

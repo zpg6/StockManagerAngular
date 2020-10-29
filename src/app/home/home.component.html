@@ -1,0 +1,192 @@
+<!-- This is the Authentication Modal that will appear when the 'Login' button is clicked -->
+
+<div class="modal is-active" #modal>
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">
+        <!-- The title of the modal will app title (Stock Manager) + whichever tab is selected (Login or Create an Account) -->
+        {{ appData.title + ' - ' + tab }}
+      </p>
+    </header>
+    <section class="modal-card-body">
+      <div class="tabs is-medium is-centered">
+        <ul>
+          <!-- A click on the 'Login' tab will switch to the 'Login' view -->
+          <li class="is-active" (click)="toggleTab('Login')" #loginTab><a>Login</a></li>
+          <!-- A click on the 'Create an Account' tab will switch to the 'Create an Account' view -->
+          <li (click)="toggleTab('Create an Account')" #createAnAccountTab><a>Create an Account</a></li>
+        </ul>
+      </div>
+
+      <!-- If the selected tab is 'Create an Account', the 'Invitation Code' input field will appear -->
+      <div *ngIf="tab === 'Create an Account'">
+        <div class="field">
+          <label class="label">Invitation Code (Case Sensitive)</label>
+          <div class="control has-icons-left has-icons-right">
+
+            <input class="input {{ getFieldClass(invitationCodeError) }}" type="text" placeholder="Invitation Code" #invitationCodeField>
+
+            <span class="icon is-small is-left">
+              <i class="mdi mdi-24px mdi-email {{ getFieldClass(invitationCodeError) }}"></i>
+            </span>
+
+
+            <!-- Once invitation code error check occurs, update view with red variations to signal error or green variations to signal success -->
+            <span class="icon is-small is-right">
+              <i class="{{ getFieldIcon(invitationCodeError) }} {{ getFieldClass(invitationCodeError) }}"></i>
+            </span>
+
+          </div>
+          <div *ngIf="invitationCodeError">
+            <p class="help is-danger">{{ invitationCodeError }}</p>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- If the selected tab is 'Create an Account', the 'First Name' input field will appear -->
+      <div *ngIf="tab === 'Create an Account'">
+        <div class="field">
+          <label class="label">First Name</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input {{ getFieldClass(firstNameError) }}" type="text" placeholder="First" #firstNameField>
+
+            <span class="icon is-small is-left">
+              <i class="mdi mdi-24px mdi-account {{ getFieldClass(firstNameError) }}"></i>
+            </span>
+
+
+            <!-- Once first name error check occurs, update view with red variations to signal error or green variations to signal success -->
+            <span class="icon is-small is-right">
+              <i class="{{ getFieldIcon(firstNameError) }} {{ getFieldClass(firstNameError) }}"></i>
+            </span>
+
+          </div>
+          <div *ngIf="firstNameError">
+            <p class="help is-danger">{{ firstNameError }}</p>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- If the selected tab is 'Create an Account', the 'Last Name' input field will appear -->
+      <div *ngIf="tab === 'Create an Account'">
+        <div class="field">
+          <label class="label">Last Name</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input {{ getFieldClass(lastNameError) }}" type="text" placeholder="Last" #lastNameField>
+
+            <span class="icon is-small is-left">
+              <i class="mdi mdi-24px mdi-account {{ getFieldClass(lastNameError) }}"></i>
+            </span>
+
+            <!-- Once last name error check occurs, update view with red variations to signal error or green variations to signal success -->
+            <span class="icon is-small is-right">
+              <i class="{{ getFieldIcon(lastNameError) }} {{ getFieldClass(lastNameError) }}"></i>
+            </span>
+
+          </div>
+          <div *ngIf="lastNameError">
+            <p class="help is-danger">{{ lastNameError }}</p>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- The 'Email Address' input field will always appear -->
+      <div class="field">
+        <label class="label">Email Address</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input {{ getFieldClass(emailError) }}" type="email" placeholder="Email" #emailField>
+
+          <span class="icon is-small is-left">
+            <i class="mdi mdi-24px mdi-at {{ getFieldClass(emailError) }}"></i>
+          </span>
+
+
+          <!-- Once email error check occurs, update view with red variations to signal error or green variations to signal success -->
+          <span class="icon is-small is-right">
+            <i class="{{ getFieldIcon(emailError) }} {{ getFieldClass(emailError) }}"></i>
+          </span>
+
+        </div>
+        <div *ngIf="emailError">
+          <p class="help is-danger">{{ emailError }}</p>
+        </div>
+      </div>
+
+
+
+      <!-- The 'Password' input field will always appear -->
+      <div class="field" #loginUserTextFieldPassword>
+        <label class="label">Password</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input {{ getFieldClass(passwordError) }}" type="password" placeholder="Password" #passwordField>
+
+          <span class="icon is-small is-left">
+            <i class="mdi mdi-24px mdi-lock {{ getFieldClass(passwordError) }}"></i>
+          </span>
+
+
+          <!-- Once email error check occurs, update view with green variations to signal success or red variations to signal error and a list of requirements for the password -->
+          <span class="icon is-small is-right">
+            <i class="{{ getFieldIcon(passwordError) }} {{ getFieldClass(passwordError) }}"></i>
+          </span>
+
+        </div>
+        <div *ngIf="passwordError">
+          <p class="help is-danger">{{ passwordError }}</p>
+        </div>
+      </div>
+
+
+
+      <!-- If the selected tab is 'Create an Account', the 'Confirm password' input field will appear -->
+      <div *ngIf="tab === 'Create an Account'">
+        <div class="field">
+          <label class="label">Confirm Password</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input {{ getFieldClass(confirmPasswordError) }}" type="password" placeholder="Confirm Password" #confirmPasswordField>
+
+            <span class="icon is-small is-left">
+              <i class="mdi mdi-24px mdi-lock {{ getFieldClass(confirmPasswordError) }}"></i>
+            </span>
+
+            <!-- Once confirm password error check occurs, update view with red variations (and string detailing passwords must match) to signal error or green variations to signal success -->
+            <span class="icon is-small is-right">
+              <i class="{{ getFieldIcon(confirmPasswordError) }} {{ getFieldClass(confirmPasswordError) }}"></i>
+            </span>
+
+          </div>
+          <div *ngIf="confirmPasswordError">
+            <p class="help is-danger">{{ confirmPasswordError }}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- An error while creating account that is unrelated to form validation will appear -->
+      <div *ngIf="showNotification()" style="margin-top: 15px;">
+        <div class="notification is-danger is-light">
+          <button class="delete" (click)="hideNotification()"></button>
+          <p>
+            {{ notificationContent }}
+          </p>
+        </div>
+      </div>
+
+
+
+
+    </section>
+    <footer class="modal-card-foot">
+
+      <button class="button is-info {{this.loading ? 'is-loading':''}}" [disabled]="this.disabled" (click)="this.loginButtonClicked()">Login</button>
+
+    </footer>
+  </div>
+</div>

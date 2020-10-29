@@ -1,0 +1,53 @@
+
+
+<div class="columns is-centered">
+
+  <div class="column is-one-third has-text-centered is-centered">
+
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          Search Items
+        </p>
+      </header>
+      <div class="card-content">
+
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" name="idField" #idField placeholder="Item ID">
+          </div>
+          <div class="control">
+            <button class="button is-primary" (click)="searchID()">Search by ID</button>
+          </div>
+        </div>
+
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" name="nameField" #nameField placeholder="Item Name">
+          </div>
+          <div class="control">
+            <button class="button is-link" (click)="searchName()">Search by Name</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="column is-one-third has-text-centered is-centered" *ngIf="this.appData.recentSearches.length > 0">
+
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          Recent Searches
+        </p>
+      </header>
+      <div class="card-content">
+        <div *ngFor="let rec of this.appData.recentSearches">
+          <a (click)="nav(rec)">{{rec}}</a>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

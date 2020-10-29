@@ -1,0 +1,20 @@
+
+.menu {
+  background-color: #232324;
+  padding: 2.5rem;
+  height: 100%;
+}
+
+.menu-label {
+  color: #FFF;
+}
+
+.menu-list a {
+  color: whitesmoke;
+  border-radius: 0.25rem;
+  margin-top: 1.0rem;
+}
+
+.menu-list a:hover {
+  background-color: #3298dc;
+}

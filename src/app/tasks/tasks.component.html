@@ -23,7 +23,7 @@
 
           <tr>
               <td>
-                <input class="input is-primary" type="number" min="0" placeholder="Item ID" name="newTaskItemID" #newTaskItemID>
+                <input class="input is-primary" [disabled]="true" type="number" min="0" placeholder="Item ID" name="newTaskItemID" #newTaskItemID>
               </td>
               <td>
                 <div class="select is-primary">
@@ -34,14 +34,14 @@
                 </div>
               </td>
               <td>
-                <input [disabled]="this.seeded" class="input is-primary" type="text" maxlength="2" placeholder="Aisle" name="newTaskItemSrcAisle" #newTaskItemSrcAisle>
+                <input [disabled]="true" class="input is-primary" type="text" maxlength="2" placeholder="Aisle" name="newTaskItemSrcAisle" #newTaskItemSrcAisle>
                 -
-                <input [disabled]="this.seeded" class="input is-primary" type="text" maxlength="1" placeholder="Aisle Section" name="newTaskItemSrcAisleSection" #newTaskItemSrcAisleSection>
+                <input [disabled]="true" class="input is-primary" type="text" maxlength="1" placeholder="Aisle Section" name="newTaskItemSrcAisleSection" #newTaskItemSrcAisleSection>
                 -
-                <input [disabled]="this.seeded" class="input is-primary" type="text" maxlength="2" placeholder="Spot" name="newTaskItemSrcSpot" #newTaskItemSrcSpot>
+                <input [disabled]="true" class="input is-primary" type="text" maxlength="2" placeholder="Spot" name="newTaskItemSrcSpot" #newTaskItemSrcSpot>
                 -<br>
                 <div class="select is-primary">
-                  <select [disabled]="this.seeded" name="newTaskItemSrcType" #newTaskItemSrcType>
+                  <select [disabled]="true" name="newTaskItemSrcType" #newTaskItemSrcType>
                     <option value="" selected disabled hidden>Choose Type</option>
                     <option>Shelf Space</option>
                     <option>Pod</option>
@@ -87,7 +87,12 @@
       </table>
 
       <span>
-        <button style="margin-bottom: 1.0rem;" class="button is-primary" (click)="this.sendNewTask()">Assign Task</button>
+
+
+        <button style="margin-bottom: 1.0rem;" class="button is-primary" routerLink="search" *ngIf="!this.seeded">Select Item</button>
+        <br>
+        <button style="margin-bottom: 1.0rem;" class="button is-primary" (click)="this.sendNewTask()" *ngIf="this.seeded">Assign Task</button>
+
 
         <p class="notification is-light is-success" *ngIf="this.successMsg.length > 0">
           {{ successMsg }}

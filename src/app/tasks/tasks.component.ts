@@ -52,6 +52,9 @@ export class TasksComponent {
     var body = {
       storeID: this.messageService.getMessageOnce().user.storeID
     }
+    this.outstanding = []
+    this.completed = []
+    this.approved = []
     this.http.post<any[]>(url, body).toPromise().then(result => {
       this.employees = result.filter(emp => {
         return emp?.id
@@ -64,21 +67,21 @@ export class TasksComponent {
         let outstandingTaskURL = this.messageService.getMessageOnce().apiRootURL + '/user/tasks/get/outstanding'
         this.http.post<any[]>(outstandingTaskURL, body).toPromise().then(tasks => {
           if (tasks.length > 0) {
-            this.outstanding = tasks
+            this.outstanding = this.outstanding.concat(tasks)
           }
         })
 
         let completedTaskURL = this.messageService.getMessageOnce().apiRootURL + '/user/tasks/get/completed'
         this.http.post<any[]>(completedTaskURL, body).toPromise().then(tasks => {
           if (tasks.length > 0) {
-            this.completed = tasks
+            this.completed = this.completed.concat(tasks)
           }
         })
 
         let approvedTaskURL = this.messageService.getMessageOnce().apiRootURL + '/user/tasks/get/approved'
         this.http.post<any[]>(approvedTaskURL, body).toPromise().then(tasks => {
           if (tasks.length > 0) {
-            this.approved = tasks
+            this.approved = this.approved.concat(tasks)
           }
         })
 
@@ -150,7 +153,7 @@ export class TasksComponent {
     this.newTaskItemDestSpot.nativeElement.value = ''
     this.newTaskItemDestType.nativeElement.value = ''
 
-
+    this.seeded = false
 
     var body = {
       storeID: this.messageService.getMessageOnce().user.storeID,
